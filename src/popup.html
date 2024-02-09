@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lock state tracker</title>
+		<link rel="stylesheet" href="popup.css" />
+	</head>
+	<body>
+		<header>
+			<button id="previous" aria-label="Go to previous day">
+				<svg
+					width="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="m15 18-6-6 6-6" />
+				</svg>
+			</button>
+
+			<span id="day-label"></span>
+
+			<button id="next" aria-label="Go to next day">
+				<svg
+					width="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="m9 18 6-6-6-6" />
+				</svg>
+			</button>
+		</header>
+
+		<main></main>
+
+		<script type="module" src="popup.js"></script>
+	</body>
+</html>

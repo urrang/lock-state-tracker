@@ -1,0 +1,18 @@
+{
+    "name": "Lock state tracker",
+    "description": "Tracking lock state changes so I can remember when I started and stopped working on a given day",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "permissions": [
+        "idle",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "src/service-worker.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "src/popup.html"
+    }
+}
+
