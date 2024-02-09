@@ -1,9 +1,9 @@
-import { storage, isSameDay } from './utils.js';
+import { logApi, isSameDay } from './utils.js';
 
 chrome.idle.onStateChanged.addListener(async (state) => {
 	// Ignore idle states
 	if (state === 'active' || state === 'locked') {
-		let log = await storage.get();
+		let log = await logApi.get();
 
 		// Ignore active states that does not follow a locked state (idle -> active)
 		if (state === 'active') {
@@ -20,7 +20,7 @@ chrome.idle.onStateChanged.addListener(async (state) => {
 			log = log.slice(100);
 		}
 
-		storage.set(log);
+		logApi.set(log);
 	}
 });
 

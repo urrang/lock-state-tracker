@@ -1,14 +1,12 @@
-export const storage = {
+export const logApi = {
 	/**
 	 * @returns {Promise<{ state: 'locked' | 'active', timestamp: number  }[]>}
 	 */
 	get: async () => {
 		const res = await chrome.storage.sync.get('log');
-		console.log(res.log || []);
 		return res.log || [];
 	},
 	set: (value) => chrome.storage.sync.set({ log: value }),
-	remove: (key) => chrome.storage.sync.remove('log'),
 };
 
 /**
@@ -34,7 +32,6 @@ export function formatTime(date) {
 	}).format(new Date(date));
 }
 
-
 /**
  * @param {Date} d1
  * @param {Date} d2
@@ -42,12 +39,4 @@ export function formatTime(date) {
  */
 export function isSameDay(d1, d2) {
 	return d1.toDateString() === d2.toDateString();
-}
-
-/**
- * @param {Date} date
- * @param {number} days
- */
-export function addDays(date, days) {
-	date.setDate(date.getDate() - days);
 }

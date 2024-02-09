@@ -1,4 +1,4 @@
-import { addDays, isSameDay, storage, formatDate, formatTime } from './utils.js';
+import { isSameDay, logApi, formatDate, formatTime } from './utils.js';
 
 let date = new Date();
 let logItems = [];
@@ -9,12 +9,12 @@ const nextBtn = document.getElementById('next');
 const mainSection = document.querySelector('main');
 
 prevBtn.addEventListener('click', () => {
-	addDays(date, -1);
+	date.setDate(date.getDate() - 1);
 	render();
 });
 
 nextBtn.addEventListener('click', () => {
-	addDays(date, 1);
+	date.setDate(date.getDate() + 1);
 	render();
 });
 
@@ -40,7 +40,7 @@ function render() {
 	mainSection.innerHTML = `<ul>${listItems.join('')}</ul>`;
 }
 
-storage.get().then(items => {
+logApi.get().then(items => {
 	logItems = items;
 	render();
 });
