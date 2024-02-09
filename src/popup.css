@@ -1,17 +1,29 @@
 body {
-	width: 250px;
+	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 	margin: 0;
+	width: 250px;
 }
+
+.app {
+	height: 400px;
+	overflow: auto;
+}
+
 header {
+	position: sticky;
+	top: 0;
+	background: #fff;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	/* border-bottom: 1px solid #ccc; */
+	height: 2.5rem;
+	padding-top: .25rem;
 
 	> button {
+		height: 100%;
+		width: 3rem;
 		background: none;
 		border: none;
-		padding: .75rem;
 		cursor: pointer;
 	}
 
@@ -22,7 +34,7 @@ header {
 }
 
 main {
-	padding: 1rem;
+	padding: .5rem 1rem 1rem;
 	text-align: center;
 
 	ul {
@@ -35,21 +47,20 @@ main {
 			gap: 1rem;
 			padding: .75rem 1rem;
 			border-radius: 6px;
-			/* background: rgb(220 252 231); */
 			background: rgb(239 246 255);
 			font-variant: tabular-nums;
 			text-transform: capitalize;
 
 			&.locked {
-				/* background: rgb(254 226 226); */
 				background: rgb(255 247 237);
 			}
 
 			.timestamp {
 				font-weight: 600;
 			}
+
 			& + li {
-				margin-top: .75rem;
+				margin-top: .5rem;
 			}
 		}
 	}

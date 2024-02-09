@@ -7,39 +7,23 @@
 		<link rel="stylesheet" href="popup.css" />
 	</head>
 	<body>
-		<header>
-			<button id="previous" aria-label="Go to previous day">
-				<svg
-					width="20"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="m15 18-6-6 6-6" />
-				</svg>
-			</button>
+		<div class="app">
+			<header>
+				<button id="previous" aria-label="Go to previous day">
+					<!-- prettier-ignore -->
+					<svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+				</button>
 
-			<span id="day-label"></span>
+				<span id="day-label"></span>
 
-			<button id="next" aria-label="Go to next day">
-				<svg
-					width="20"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="m9 18 6-6-6-6" />
-				</svg>
-			</button>
-		</header>
+				<button id="next" aria-label="Go to next day">
+					<!-- prettier-ignore -->
+					<svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+				</button>
+			</header>
 
-		<main></main>
+			<main></main>
+		</div>
 
 		<script type="module" src="popup.js"></script>
 	</body>
