@@ -1,4 +1,4 @@
-import { addDays, storage } from './utils.js';
+import { addDays, isSameDay, storage, formatDate, formatTime } from './utils.js';
 
 let date = new Date();
 let logItems = [];
@@ -18,29 +18,30 @@ nextBtn.addEventListener('click', () => {
 	render();
 });
 
-
 function render() {
-	dayLabel.innerText = date.toDateString();
+	dayLabel.innerText = formatDate(date);
 
-	mainSection.innerHTML = `
-		Log count: ${logItems.length}
-	`;
+	const items = logItems.filter(item => {
+		return isSameDay(new Date(item.timestamp), date);
+	});
+
+	if (!items.length) {
+		mainSection.innerHTML = 'No log items for this day';
+		return;
+	}
+
+	const listItems = items.map(item => `
+		<li class="${item.state}">
+			<span class="timestamp">${formatTime(item.timestamp)}</span>	
+			<span class="state">${item.state}</span>	
+		</li>
+	`);
+
+	mainSection.innerHTML = `<ul>${listItems.join('')}</ul>`;
 }
 
-render();
 storage.get().then(items => {
 	logItems = items;
 	render();
 });
 
-
-// class LogView extends HTMLElement {
-//
-// 	connectedCallback() {
-// 		storage.get().then(items => render(items));
-// 	}
-//
-// 	render(items) {
-// 		
-// 	}
-// }

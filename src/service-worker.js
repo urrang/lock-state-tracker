@@ -1,14 +1,14 @@
-import { storage, isSameDate } from './utils.js';
+import { storage, isSameDay } from './utils.js';
 
 chrome.idle.onStateChanged.addListener(async (state) => {
 	// Ignore idle states
 	if (state === 'active' || state === 'locked') {
-		let log = await storage.get('log');
+		let log = await storage.get();
 
 		// Ignore active states that does not follow a locked state (idle -> active)
 		if (state === 'active') {
 			const lastEntry = log[log.length - 1];
-			const entryWasToday = isSameDate(new Date(lastEntry.timestamp), new Date());
+			const entryWasToday = isSameDay(new Date(lastEntry.timestamp), new Date());
 			if (entryWasToday && lastEntry.state !== 'locked') {
 				return;
 			}
@@ -20,7 +20,7 @@ chrome.idle.onStateChanged.addListener(async (state) => {
 			log = log.slice(100);
 		}
 
-		storage.set('log', log);
+		storage.set(log);
 	}
 });
 
