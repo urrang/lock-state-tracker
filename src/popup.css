@@ -1,23 +1,24 @@
 body {
 	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 	margin: 0;
-	width: 250px;
+	width: 280px;
 }
 
 .app {
-	height: 400px;
+	max-height: 420px;
 	overflow: auto;
 }
 
 header {
 	position: sticky;
 	top: 0;
-	background: #fff;
+	background: rgb(244 244 245);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: 2.5rem;
-	padding-top: .25rem;
+	padding: .25rem;
+
 
 	> button {
 		height: 100%;
@@ -34,36 +35,36 @@ header {
 }
 
 main {
-	padding: .5rem 1rem 1rem;
+	padding: .5rem;
+}
+
+.empty-state {
+	margin: 1rem 0;
 	text-align: center;
+}
 
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
 
-		li {
-			display: flex;
-			gap: 1rem;
-			padding: .75rem 1rem;
-			border-radius: 6px;
-			background: rgb(239 246 255);
-			font-variant: tabular-nums;
-			text-transform: capitalize;
+	li {
+		display: flex;
+		gap: .75rem;
+		text-align: left;
+		padding: .75rem 1rem;
+		line-height: 1.5rem;
+		border-radius: 6px;
+		font-variant: tabular-nums;
+		text-transform: capitalize;
 
-			&.locked {
-				background: rgb(255 247 237);
-			}
+		&:hover {
+			background: rgb(244 244 245);
+		}
 
-			.timestamp {
-				font-weight: 600;
-			}
-
-			& + li {
-				margin-top: .5rem;
-			}
+		span {
+			flex: 1;
 		}
 	}
 }
-
 

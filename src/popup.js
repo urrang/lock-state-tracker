@@ -26,16 +26,25 @@ function render() {
 	});
 
 	if (!items.length) {
-		mainSection.innerHTML = 'No log items for this day';
+		mainSection.innerHTML = '<div class="empty-state">No log items for this day</div>';
 		return;
 	}
 
-	const listItems = items.map(item => `
-		<li class="${item.state}">
-			<span class="timestamp">${formatTime(item.timestamp)}</span>	
-			<span class="state">${item.state}</span>	
-		</li>
-	`);
+	const listItems = items.map(item => {
+		let icon = '<svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 10 2 2 4-4"/><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>';
+
+		if (item.state === 'locked') {
+			icon = '<svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="16" r="1"/><rect x="3" y="10" width="18" height="12" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>';
+		}
+
+		return `
+			<li class="${item.state}">
+				${icon}
+				<span>${item.state}</span>	
+				<strong>${formatTime(item.timestamp)}</strong>	
+			</li>
+		`
+	});
 
 	mainSection.innerHTML = `<ul>${listItems.join('')}</ul>`;
 }

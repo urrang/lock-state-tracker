@@ -1,5 +1,5 @@
 {
-	"name": "idle-state-tracker",
+	"name": "lock-state-tracker",
 	"version": "1.0.0",
 	"description": "Chrome extension for tracking computer lock state",
 	"type": "module",
