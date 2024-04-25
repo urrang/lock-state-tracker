@@ -1,7 +1,6 @@
-import { isSameDay, logApi, formatDate, formatTime } from './utils.js';
+import { getEntriesByDate, formatDate, formatTime, runStorageCleanup } from './utils.js';
 
 let date = new Date();
-let logItems = [];
 
 const dayLabel = document.getElementById('day-label');
 const prevBtn = document.getElementById('previous');
@@ -18,19 +17,17 @@ nextBtn.addEventListener('click', () => {
 	render();
 });
 
-function render() {
+async function render() {
 	dayLabel.innerText = formatDate(date);
 
-	const items = logItems.filter(item => {
-		return isSameDay(new Date(item.timestamp), date);
-	});
+	const entries = await getEntriesByDate(date);
 
-	if (!items.length) {
+	if (!entries.length) {
 		mainSection.innerHTML = '<div class="empty-state">No log items for this day</div>';
 		return;
 	}
 
-	const listItems = items.map(item => {
+	const listItems = entries.map(item => {
 		let icon = '<svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 10 2 2 4-4"/><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M12 17v4"/><path d="M8 21h8"/></svg>';
 
 		if (item.state === 'locked') {
@@ -49,8 +46,4 @@ function render() {
 	mainSection.innerHTML = `<ul>${listItems.join('')}</ul>`;
 }
 
-logApi.get().then(items => {
-	logItems = items;
-	render();
-});
-
+render();

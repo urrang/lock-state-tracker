@@ -1,26 +1,27 @@
-import { logApi, isSameDay } from './utils.js';
+import { getEntriesByDate, setEntriesOnDate, isSameDay, runStorageCleanup } from './utils.js';
 
 chrome.idle.onStateChanged.addListener(async (state) => {
-	// Ignore idle states
-	if (state === 'active' || state === 'locked') {
-		let log = await logApi.get();
+    // Ignore idle states
+    if (state === 'active' || state === 'locked') {
+        const date = new Date();
+        let entries = await getEntriesByDate(date);
 
-		// Ignore active states that does not follow a locked state (idle -> active)
-		if (state === 'active') {
-			const lastEntry = log[log.length - 1];
-			const entryWasToday = isSameDay(new Date(lastEntry.timestamp), new Date());
-			if (entryWasToday && lastEntry.state !== 'locked') {
-				return;
-			}
-		}
+        // Ignore active states that does not follow a locked state (idle -> active)
+        if (state === 'active') {
+            const lastEntry = entries[entries.length - 1];
+            const entryWasToday = lastEntry && isSameDay(new Date(lastEntry.timestamp), date);
+            if (entryWasToday && lastEntry.state !== 'locked') {
+                return;
+            }
+        }
 
-		log.push({ state, timestamp: Date.now() });
+        entries.push({ state, timestamp: Date.now() });
+        setEntriesOnDate(date, entries);
 
-		if (log.length > 500) {
-			log = log.slice(100);
-		}
-
-		logApi.set(log);
-	}
+        // Only run cleanup once per day (after adding the first entry)
+        if (entries.length === 1) {
+            runStorageCleanup();
+        }
+    }
 });
 
