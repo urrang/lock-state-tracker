@@ -1,7 +1,7 @@
 /**
  * @param {Date} date
  */
-function getStorageKey(date) {
+export function getDateString(date) {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
@@ -10,7 +10,7 @@ function getStorageKey(date) {
  * @returns {Promise<{ state: 'locked' | 'active', timestamp: number  }[]>}
  */
 export async function getEntriesByDate(date) {
-    const storageKey = getStorageKey(date);
+    const storageKey = getDateString(date);
     const res = await chrome.storage.sync.get(storageKey);
     return res[storageKey] || [];
 }
@@ -20,20 +20,24 @@ export async function getEntriesByDate(date) {
  * @param {Array<{ state: 'locked' | 'active', timestamp: number  }> entries
  */
 export function setEntriesOnDate(date, entries) {
-    const storageKey = getStorageKey(date);
+    const storageKey = getDateString(date);
     chrome.storage.sync.set({ [storageKey]: entries })
 }
 
 export async function runStorageCleanup() {
+    console.time('StorageCleanup');
     const items = await chrome.storage.sync.get(null);
-    const keys = Object.keys(items);
-    if (items.length > 10) {
-        const keysSorted = keys.toSorted((a, b) => {
-            return new Date(a).getTime() - new Date(b).getTime();
-        });
+    const keys = Object.keys(items).toSorted((a, b) => {
+        return new Date(b).getTime() - new Date(a).getTime();
+    });
 
-        chrome.storage.sync.remove(keysSorted.shift());
+    const dropKeys = keys.slice(10);
+    for (const key of dropKeys) {
+        chrome.storage.sync.remove(key);
     }
+
+    console.timeEnd('StorageCleanup');
+    console.log(`Dropped ${dropKeys.length} items`);
 }
 
 /**

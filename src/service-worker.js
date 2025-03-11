@@ -1,4 +1,6 @@
-import { getEntriesByDate, setEntriesOnDate, isSameDay, runStorageCleanup } from './utils.js';
+import { getDateString, getEntriesByDate, setEntriesOnDate, isSameDay, runStorageCleanup } from './utils.js';
+
+let cleanupDate;
 
 chrome.idle.onStateChanged.addListener(async (state) => {
     // Ignore idle states
@@ -18,9 +20,11 @@ chrome.idle.onStateChanged.addListener(async (state) => {
         entries.push({ state, timestamp: Date.now() });
         setEntriesOnDate(date, entries);
 
-        // Only run cleanup once per day (after adding the first entry)
-        if (entries.length === 1) {
+        // Only run cleanup once per day
+        const dateString = getDateString(new Date());
+        if (dateString !== cleanupDate) {
             runStorageCleanup();
+            cleanupDate = dateString;
         }
     }
 });
